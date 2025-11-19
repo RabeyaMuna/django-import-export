@@ -379,8 +379,7 @@ class TestExportButtonOnChangeForm(AdminTestMixin, TestCase):
             args=[self.cat1.id],
         )
         self.target_str = (
-            '<input type="submit" value="Export" '
-            'class="default" name="_export-item">'
+            '<input type="submit" value="Export" class="default" name="_export-item">'
         )
 
     def test_export_button_on_change_form(self):
@@ -460,13 +459,13 @@ class TestSkipExportFormFromAction(AdminTestMixin, TestCase):
     def test_skip_export_form_from_action_enabled(self):
         self.model_admin.skip_export_form_from_action = True
         response = self.model_admin.export_admin_action(self.request, self.queryset)
-        target_file_contents = "id,name\r\n" f"{self.cat1.id},Cat 1\r\n"
+        target_file_contents = f"id,name\r\n{self.cat1.id},Cat 1\r\n"
         self.assertEqual(target_file_contents.encode(), response.content)
 
     @override_settings(IMPORT_EXPORT_SKIP_ADMIN_ACTION_EXPORT_UI=True)
     def test_skip_export_form_from_action_setting_enabled(self):
         response = self.model_admin.export_admin_action(self.request, self.queryset)
-        target_file_contents = "id,name\r\n" f"{self.cat1.id},Cat 1\r\n"
+        target_file_contents = f"id,name\r\n{self.cat1.id},Cat 1\r\n"
         self.assertEqual(target_file_contents.encode(), response.content)
 
 
@@ -500,7 +499,7 @@ class TestSkipExportFormFromChangeForm(AdminTestMixin, TestCase):
     def test_export_button_on_change_form_skip_export_form_from_action_enabled(self):
         self.model_admin.skip_export_form_from_action = True
         response = self.model_admin.export_admin_action(self.request, self.queryset)
-        target_file_contents = "id,name\r\n" f"{self.cat1.id},Cat 1\r\n"
+        target_file_contents = f"id,name\r\n{self.cat1.id},Cat 1\r\n"
         self.assertEqual(target_file_contents.encode(), response.content)
 
     @override_settings(IMPORT_EXPORT_SKIP_ADMIN_ACTION_EXPORT_UI=True)
@@ -509,7 +508,7 @@ class TestSkipExportFormFromChangeForm(AdminTestMixin, TestCase):
     ):
         self.model_admin.skip_export_form_from_action = True
         response = self.model_admin.export_admin_action(self.request, self.queryset)
-        target_file_contents = "id,name\r\n" f"{self.cat1.id},Cat 1\r\n"
+        target_file_contents = f"id,name\r\n{self.cat1.id},Cat 1\r\n"
         self.assertEqual(target_file_contents.encode(), response.content)
 
     @override_settings(IMPORT_EXPORT_SKIP_ADMIN_EXPORT_UI=True)
