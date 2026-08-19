@@ -5,12 +5,12 @@ from unittest import mock
 from unittest.mock import patch
 
 import django
-from core.models import Author, Book, Category
-from core.tests.utils import ignore_utcnow_deprecation_warning
 from django.test import TestCase
 from django.test.utils import override_settings
 from django.utils import timezone
 
+from core.models import Author, Book, Category
+from core.tests.utils import ignore_utcnow_deprecation_warning
 from import_export import widgets
 from import_export.exceptions import WidgetError
 
@@ -112,7 +112,6 @@ class FormatDatetimeTest(TestCase):
 class CustomDate(date):
     """test derived instance of date"""
 
-    pass
 
 
 class DateWidgetTest(TestCase, RowDeprecationTestMixin):
@@ -131,7 +130,7 @@ class DateWidgetTest(TestCase, RowDeprecationTestMixin):
         self.assertEqual(self.widget.render(None), "")
 
     def test_render_invalid_type(self):
-        self.assertEqual(self.widget.render(int(1)), "")
+        self.assertEqual(self.widget.render(1), "")
 
     def test_render_coerce_to_string_is_False(self):
         self.widget = widgets.DateWidget(coerce_to_string=False)
@@ -176,7 +175,6 @@ class DateWidgetTest(TestCase, RowDeprecationTestMixin):
 class CustomDateTime(datetime):
     """test derived instance of datetime"""
 
-    pass
 
 
 class DateTimeWidgetTest(TestCase, RowDeprecationTestMixin):
@@ -195,7 +193,7 @@ class DateTimeWidgetTest(TestCase, RowDeprecationTestMixin):
         self.assertEqual(self.widget.render(None), "")
 
     def test_render_invalid_type(self):
-        self.assertEqual(self.widget.render(int(1)), "")
+        self.assertEqual(self.widget.render(1), "")
 
     def test_render_coerce_to_string_is_False(self):
         self.widget = widgets.DateTimeWidget(coerce_to_string=False)
@@ -290,7 +288,6 @@ class DateTimeWidgetBefore1900Test(TestCase):
 class CustomTime(time):
     """test derived instance of time"""
 
-    pass
 
 
 class TimeWidgetTest(TestCase, RowDeprecationTestMixin):
@@ -309,7 +306,7 @@ class TimeWidgetTest(TestCase, RowDeprecationTestMixin):
         self.assertEqual(self.widget.render(None), "")
 
     def test_render_invalid_type(self):
-        self.assertEqual(self.widget.render(int(1)), "")
+        self.assertEqual(self.widget.render(1), "")
 
     def test_render_coerce_to_string_is_False(self):
         self.widget = widgets.TimeWidget(coerce_to_string=False)
@@ -357,7 +354,7 @@ class DurationWidgetTest(TestCase, RowDeprecationTestMixin):
         self.assertEqual(self.duration, self.widget.render(self.duration))
 
     def test_render_invalid_type(self):
-        self.assertEqual(self.widget.render(int(1)), "")
+        self.assertEqual(self.widget.render(1), "")
 
     def test_clean(self):
         self.assertEqual(self.widget.clean("1:57:00"), self.duration)
@@ -492,8 +489,8 @@ class DecimalWidgetTest(TestCase, RowDeprecationTestMixin):
         self.assertEqual(self.widget.render("1"), "")
 
     def test_clean_string_zero(self):
-        self.assertEqual(self.widget.clean("0"), Decimal("0"))
-        self.assertEqual(self.widget.clean("0.0"), Decimal("0"))
+        self.assertEqual(self.widget.clean("0"), Decimal(0))
+        self.assertEqual(self.widget.clean("0.0"), Decimal(0))
 
     def test_clean_empty_string(self):
         self.assertEqual(self.widget.clean(""), None)
@@ -701,7 +698,7 @@ class ManyToManyWidget(TestCase, RowDeprecationTestMixin):
         self.assertIn(self.cat2, cleaned_data)
 
     def test_clean_typo(self):
-        value = "%s," % self.cat1.pk
+        value = f"{self.cat1.pk},"
         cleaned_data = self.widget.clean(value)
         self.assertEqual(len(cleaned_data), 1)
         self.assertIn(self.cat1, cleaned_data)

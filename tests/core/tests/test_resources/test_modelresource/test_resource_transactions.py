@@ -1,4 +1,8 @@
 import tablib
+from django.test import TransactionTestCase, skipUnlessDBFeature
+from django.utils.encoding import force_str
+from django.utils.html import strip_tags
+
 from core.models import Author, Book, Category, Profile
 from core.tests.resources import (
     AuthorResource,
@@ -6,9 +10,6 @@ from core.tests.resources import (
     CategoryResource,
     ProfileResource,
 )
-from django.test import TransactionTestCase, skipUnlessDBFeature
-from django.utils.encoding import force_str
-from django.utils.html import strip_tags
 
 
 class ModelResourceTransactionTest(TransactionTestCase):

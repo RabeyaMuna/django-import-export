@@ -1,7 +1,7 @@
-from core.tests.resources import BookResource
 from django.db.models import CharField, SlugField
 from django.test import TestCase
 
+from core.tests.resources import BookResource
 from import_export import widgets
 
 

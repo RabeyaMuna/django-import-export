@@ -100,17 +100,11 @@ class Command(BaseCommand):
             for line, errors in result.row_errors():
                 for error in errors:
                     self.stderr.write(
-                        self.style.ERROR(f"Line number: {line} - {repr(error.error)}")
+                        self.style.ERROR(f"Line number: {line} - {error.error!r}")
                     )
             sys.exit(1)
         else:
             success_message = (
-                "Import finished: {} new, {} updated, {} deleted and {} skipped {}."
-            ).format(
-                result.totals[RowResult.IMPORT_TYPE_NEW],
-                result.totals[RowResult.IMPORT_TYPE_UPDATE],
-                result.totals[RowResult.IMPORT_TYPE_DELETE],
-                result.totals[RowResult.IMPORT_TYPE_SKIP],
-                resource._meta.model._meta.verbose_name_plural,
+                f"Import finished: {result.totals[RowResult.IMPORT_TYPE_NEW]} new, {result.totals[RowResult.IMPORT_TYPE_UPDATE]} updated, {result.totals[RowResult.IMPORT_TYPE_DELETE]} deleted and {result.totals[RowResult.IMPORT_TYPE_SKIP]} skipped {resource._meta.model._meta.verbose_name_plural}."
             )
             self.stderr.write(self.style.NOTICE(success_message))

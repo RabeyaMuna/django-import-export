@@ -1,9 +1,9 @@
 import os
 from datetime import datetime
 
-from core.admin import BookAdmin
 from django.contrib.auth.models import User
 
+from core.admin import BookAdmin
 from import_export.constants import FORM_FIELD_PREFIX
 from import_export.formats.base_formats import DEFAULT_FORMATS
 
@@ -99,8 +99,7 @@ class AdminTestMixin:
                 break
         else:
             raise Exception(
-                "Unable to find %s format. DEFAULT_FORMATS: %r"
-                % (format, DEFAULT_FORMATS)
+                f"Unable to find {format} format. DEFAULT_FORMATS: {DEFAULT_FORMATS!r}"
             )
         return xlsx_index
 

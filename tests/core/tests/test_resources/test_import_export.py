@@ -2,11 +2,11 @@ from datetime import date
 from unittest.mock import patch
 
 import tablib
+from django.test import TestCase
+
 from core.admin import UUIDBookResource
 from core.models import Author, Book, Category, EBook, NamedAuthor, UUIDBook
 from core.tests.resources import AuthorResource, BookResource
-from django.test import TestCase
-
 from import_export import exceptions, fields, resources, widgets
 from import_export.fields import Field
 from import_export.resources import ModelResource
@@ -18,8 +18,8 @@ class AfterImportComparisonTest(TestCase):
 
         def after_import_row(self, row, row_result, **kwargs):
             if (
-                getattr(row_result.original, "published") is None
-                and getattr(row_result.instance, "published") is not None
+                row_result.original.published is None
+                and row_result.instance.published is not None
             ):
                 self.is_published = True
 

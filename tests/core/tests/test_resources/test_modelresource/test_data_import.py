@@ -2,10 +2,10 @@ from decimal import Decimal
 from unittest import mock
 
 import tablib
-from core.models import Book
-from core.tests.resources import BookResource, BookResourceWithStoreInstance
 from django.test import TestCase, skipUnlessDBFeature
 
+from core.models import Book
+from core.tests.resources import BookResource, BookResourceWithStoreInstance
 from import_export import results
 from import_export.resources import Diff
 

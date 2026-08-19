@@ -92,7 +92,7 @@ class ResourceOptions:
     is called during the import
     process to identify potential validation errors for each (non skipped) row.
     The default value is ``False``.
-    """  # noqa: E501
+    """
 
     chunk_size = None
     """

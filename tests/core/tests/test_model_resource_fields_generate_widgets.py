@@ -1,7 +1,6 @@
 from unittest import TestCase
 
 import django
-from core.models import WithPositiveIntegerFields
 from django.contrib.contenttypes import fields as contenttype_fields
 from django.contrib.postgres import fields as postgres
 from django.contrib.postgres import search as postgres_search
@@ -9,6 +8,7 @@ from django.contrib.postgres.fields import ranges as postgres_ranges
 from django.db import models
 from django.db.models.fields.related import ForeignKey, RelatedField
 
+from core.models import WithPositiveIntegerFields
 from import_export import widgets
 from import_export.resources import ModelResource
 from import_export.widgets import ForeignKeyWidget

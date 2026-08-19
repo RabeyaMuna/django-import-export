@@ -1,10 +1,10 @@
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.auth.models import User
 from django.test import RequestFactory
 from django.test.testcases import TestCase
 
+from core.tests.admin_integration.mixins import AdminTestMixin
 from import_export.admin import ImportExportMixinBase
 
 

@@ -1,9 +1,10 @@
 import os
 
-from core.admin import AuthorAdmin, BookAdmin
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.test.testcases import TestCase
 from django.utils.translation import gettext_lazy as _
+
+from core.admin import AuthorAdmin, BookAdmin
+from core.tests.admin_integration.mixins import AdminTestMixin
 
 
 class ImportAdminSecurityTests(AdminTestMixin, TestCase):

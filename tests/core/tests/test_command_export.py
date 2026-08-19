@@ -1,9 +1,10 @@
 from io import BytesIO, StringIO, TextIOWrapper
 from unittest.mock import Mock
 
-from core.models import Book
 from django.core.management import call_command
 from django.test import TestCase
+
+from core.models import Book
 
 
 class ExportCommandTest(TestCase):
@@ -19,7 +20,7 @@ class ExportCommandTest(TestCase):
         data = self.out.read()
         self.assertEqual(
             data,
-            "id,name,author,author_email,imported,published,published_time,price,added,categories\n100,Some book,,,0,,,,,\n",  # noqa
+            "id,name,author,author_email,imported,published,published_time,price,added,categories\n100,Some book,,,0,,,,,\n",
         )
 
     def test_export_command_as_csv_with_encoding(self):
@@ -31,7 +32,7 @@ class ExportCommandTest(TestCase):
         data = self.out.read()
         self.assertEqual(
             data,
-            "id,name,author,author_email,imported,published,published_time,price,added,categories\n100,Some book,,,0,,,,,\n",  # noqa
+            "id,name,author,author_email,imported,published,published_time,price,added,categories\n100,Some book,,,0,,,,,\n",
         )
 
     def test_export_command_binary_data(self):

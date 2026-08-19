@@ -1,15 +1,15 @@
 from unittest import mock
 from unittest.mock import PropertyMock, patch
 
-from core.admin import BookAdmin, EBookResource, ImportMixin
-from core.models import Author, Book, Parent
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.contrib.admin.models import DELETION, LogEntry
 from django.core.exceptions import ValidationError
 from django.test.testcases import TestCase, TransactionTestCase
 from django.test.utils import override_settings
 from django.utils.translation import gettext_lazy as _
 
+from core.admin import BookAdmin, EBookResource, ImportMixin
+from core.models import Author, Book, Parent
+from core.tests.admin_integration.mixins import AdminTestMixin
 from import_export.admin import ExportMixin
 from import_export.formats import base_formats
 from import_export.resources import ModelResource
@@ -663,7 +663,6 @@ class GetImportFieldsTest(AdminTestMixin, TestCase):
     def setUp(self):
         super().setUp()
         from core.models import Book
-
         from import_export.fields import Field
         from import_export.resources import ModelResource
 
@@ -709,7 +708,7 @@ class GetImportFieldsTest(AdminTestMixin, TestCase):
 
         # For import, the fields_list should correctly show import fields
         if fields_list:
-            resource_name, field_names = fields_list[0]
+            _resource_name, field_names = fields_list[0]
 
             # Verify import fields are shown correctly
             expected_import_fields = ["book_name", "book_price"]

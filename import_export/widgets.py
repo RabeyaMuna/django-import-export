@@ -270,7 +270,7 @@ class BooleanWidget(Widget):
         """
         if value in self.NULL_VALUES:
             return None
-        return True if value in self.TRUE_VALUES else False
+        return value in self.TRUE_VALUES
 
     def render(self, value, obj=None, **kwargs):
         """
@@ -711,7 +711,7 @@ class ManyToManyWidget(Widget):
         else:
             ids = value.split(self.separator)
             ids = filter(None, [i.strip() for i in ids])
-        return self.model.objects.filter(**{"%s__in" % self.field: ids})
+        return self.model.objects.filter(**{f"{self.field}__in": ids})
 
     def render(self, value, obj=None, **kwargs):
         """

@@ -1,12 +1,13 @@
 import os
 from unittest.mock import patch
 
-from core.admin import CustomBookAdmin, ImportMixin
-from core.models import Author, EBook
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.test.testcases import TestCase
 from django.test.utils import override_settings
 from django.utils.translation import gettext_lazy as _
+
+from core.admin import CustomBookAdmin, ImportMixin
+from core.models import Author, EBook
+from core.tests.admin_integration.mixins import AdminTestMixin
 
 
 class ImportTemplateTests(AdminTestMixin, TestCase):

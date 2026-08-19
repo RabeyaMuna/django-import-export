@@ -330,7 +330,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_save_instance(self, instance, row, **kwargs):
         r"""
@@ -343,7 +342,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def delete_instance(self, instance, row, **kwargs):
         r"""
@@ -378,7 +376,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_delete_instance(self, instance, row, **kwargs):
         r"""
@@ -391,7 +388,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def import_field(self, field, instance, row, is_m2m=False, **kwargs):
         r"""
@@ -564,7 +560,7 @@ class Resource(metaclass=DeclarativeMetaclass):
             # we need to compare the results
             if isinstance(field.widget, widgets.ManyToManyWidget):
                 # #1437 - handle m2m field not present in import file
-                if field.column_name not in row.keys():
+                if field.column_name not in row:
                     continue
                 # m2m instance values are taken from the 'row' because they
                 # have not been written to the 'instance' at this point
@@ -598,7 +594,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_import(self, dataset, result, **kwargs):
         r"""
@@ -612,7 +607,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def before_import_row(self, row, **kwargs):
         r"""
@@ -623,7 +617,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_import_row(self, row, row_result, **kwargs):
         r"""
@@ -637,7 +630,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_import_instance(self, instance, new, row_number=None, **kwargs):
         warn(
@@ -664,7 +656,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def handle_import_error(self, result, error, raise_errors=False):
         logger.debug(error, exc_info=error)
@@ -993,7 +984,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             Metadata which may be associated with the export.
         """
-        pass
 
     def after_export(self, queryset, dataset, **kwargs):
         r"""
@@ -1006,7 +996,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             Metadata which may be associated with the export.
         """
-        pass
 
     def filter_export(self, queryset, **kwargs):
         r"""
@@ -1130,7 +1119,7 @@ class Resource(metaclass=DeclarativeMetaclass):
         if field is not missing:
             return field
 
-        for field_name, field in self.fields.items():
+        for field in self.fields.values():
             if target_field_name == field.column_name:
                 return field
         # it should have been possible to identify the declared field
@@ -1144,7 +1133,7 @@ class Resource(metaclass=DeclarativeMetaclass):
         # get any declared 'order' fields
         order_fields = tuple(getattr(self._meta, order_field) or ())
         # get any defined fields
-        defined_fields = order_fields + tuple(getattr(self._meta, "fields") or ())
+        defined_fields = order_fields + tuple(self._meta.fields or ())
 
         order = []
         [order.append(f) for f in defined_fields if f not in order]
@@ -1186,8 +1175,7 @@ class Resource(metaclass=DeclarativeMetaclass):
             raise exceptions.FieldError(
                 _(
                     "The following fields are declared in 'import_id_fields' but "
-                    "are not present in the resource fields: %s"
-                    % ", ".join(missing_fields)
+                    "are not present in the resource fields: {}".format(", ".join(missing_fields))
                 )
             )
 
@@ -1201,8 +1189,7 @@ class Resource(metaclass=DeclarativeMetaclass):
             raise exceptions.FieldError(
                 _(
                     "The following fields are declared in 'import_id_fields' but "
-                    "are not present in the file headers: %s"
-                    % ", ".join(missing_headers)
+                    "are not present in the file headers: {}".format(", ".join(missing_headers))
                 )
             )
 

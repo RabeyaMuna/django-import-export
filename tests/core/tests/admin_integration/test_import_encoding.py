@@ -1,6 +1,7 @@
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.test.testcases import TestCase
 from django.test.utils import override_settings
+
+from core.tests.admin_integration.mixins import AdminTestMixin
 
 
 class ConfirmImportEncodingTest(AdminTestMixin, TestCase):

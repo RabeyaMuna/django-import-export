@@ -1,9 +1,9 @@
 from unittest import mock
 
 import tablib
-from core.models import Book
 from django.test import TestCase
 
+from core.models import Book
 from import_export import resources
 
 

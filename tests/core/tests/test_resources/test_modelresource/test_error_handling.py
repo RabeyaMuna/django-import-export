@@ -1,6 +1,9 @@
 from unittest import mock
 
 import tablib
+from django.core.exceptions import ImproperlyConfigured, ValidationError
+from django.test import TestCase
+
 from core.models import Author, Book
 from core.tests.resources import (
     AuthorResource,
@@ -8,9 +11,6 @@ from core.tests.resources import (
     BookResourceWithLineNumberLogger,
     ProfileResource,
 )
-from django.core.exceptions import ImproperlyConfigured, ValidationError
-from django.test import TestCase
-
 from import_export import exceptions, resources, results
 
 
@@ -149,16 +149,15 @@ class ErrorHandlingTest(TestCase):
         dataset = tablib.Dataset(row, headers=["id"])
         with mock.patch(
             "import_export.resources.Field.save", side_effect=ValidationError("fail!")
+        ), self.assertRaisesRegex(
+            exceptions.ImportError, "{'__all__': \\['fail!'\\]}"
         ):
-            with self.assertRaisesRegex(
-                exceptions.ImportError, "{'__all__': \\['fail!'\\]}"
-            ):
-                resource.import_data(
-                    dataset,
-                    dry_run=True,
-                    use_transactions=True,
-                    raise_errors=True,
-                )
+            resource.import_data(
+                dataset,
+                dry_run=True,
+                use_transactions=True,
+                raise_errors=True,
+            )
 
     def test_row_result_raise_ValidationError_collect_failed_rows(self):
         # 1752

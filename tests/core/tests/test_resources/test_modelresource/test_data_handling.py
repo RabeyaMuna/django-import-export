@@ -1,10 +1,10 @@
 from decimal import InvalidOperation
 
 import tablib
-from core.models import Author, Book
-from core.tests.resources import AuthorResourceWithCustomWidget, BookResource
 from django.test import TestCase
 
+from core.models import Author, Book
+from core.tests.resources import AuthorResourceWithCustomWidget, BookResource
 from import_export import resources, results
 
 

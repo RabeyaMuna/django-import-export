@@ -1,10 +1,10 @@
 from unittest import mock
 
 import tablib
-from core.models import Book, UUIDBook
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
+from core.models import Book, UUIDBook
 from import_export import exceptions, fields, resources, widgets
 from import_export.instance_loaders import ModelInstanceLoader
 

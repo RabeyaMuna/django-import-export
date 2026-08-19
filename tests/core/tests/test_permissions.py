@@ -1,12 +1,13 @@
 import os.path
 
-from core.models import Category
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.test.testcases import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
+
+from core.models import Category
+from core.tests.admin_integration.mixins import AdminTestMixin
 
 
 class ImportExportPermissionTest(AdminTestMixin, TestCase):
@@ -136,8 +137,7 @@ class ImportExportPermissionTest(AdminTestMixin, TestCase):
         self.set_user_model_permission("view", "category")
         self.cat1 = Category.objects.create(name="Cat 1")
         self.change_url = reverse(
-            "%s:%s_%s_change"
-            % (
+            "{}:{}_{}_change".format(
                 "admin",
                 "core",
                 "category",

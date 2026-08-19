@@ -239,11 +239,7 @@ class BaseExportMixin(BaseImportExportMixin):
 
     def get_export_filename(self, file_format):
         date_str = now().strftime("%Y-%m-%d")
-        filename = "{}-{}.{}".format(
-            self.model.__name__,
-            date_str,
-            file_format.get_extension(),
-        )
+        filename = f"{self.model.__name__}-{date_str}.{file_format.get_extension()}"
         return filename
 
     def is_skip_export_form_enabled(self):
@@ -307,9 +303,7 @@ class ExportViewFormMixin(ExportViewMixin, FormView):
             response = HttpResponse(export_data, content_type=content_type)
         except TypeError:
             response = HttpResponse(export_data, mimetype=content_type)
-        response["Content-Disposition"] = 'attachment; filename="{}"'.format(
-            self.get_export_filename(file_format),
-        )
+        response["Content-Disposition"] = f'attachment; filename="{self.get_export_filename(file_format)}"'
 
         post_export.send(sender=None, model=self.model)
         return response

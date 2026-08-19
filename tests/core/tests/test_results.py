@@ -1,10 +1,10 @@
 from unittest.mock import patch
 
-from core.models import Book
 from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase
 from tablib import Dataset
 
+from core.models import Book
 from import_export.results import Error, InvalidRow, Result, RowResult
 
 

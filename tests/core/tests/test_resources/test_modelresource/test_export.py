@@ -1,12 +1,12 @@
 from datetime import date
 
 import tablib
-from core.admin import BookResource
-from core.models import Author, Book, EBook
 from django.db.models import CharField, Value
 from django.db.models.functions import Cast, JSONObject, TruncDate
 from django.test import TestCase
 
+from core.admin import BookResource
+from core.models import Author, Book, EBook
 from import_export.fields import Field
 from import_export.resources import ModelResource
 
@@ -81,7 +81,7 @@ class ExportFunctionalityTest(TestCase):
 
         self.resource = _BookResource()
         # when queryset is supplied, it should be passed to before_export()
-        self.resource.export(queryset=Book.objects.all(), **{"a": 1})
+        self.resource.export(queryset=Book.objects.all(), a=1)
         self.assertEqual(Book.objects.count(), len(self.resource.qs))
         self.assertEqual({"a": 1}, self.resource.kwargs_)
 

@@ -2,9 +2,6 @@ import os
 from io import StringIO
 from unittest import mock
 
-from core.admin import BookAdmin, CustomBookAdmin
-from core.models import Author, Book, EBook
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -13,6 +10,9 @@ from django.test.testcases import TestCase
 from django.test.utils import override_settings
 from django.utils.translation import gettext_lazy as _
 
+from core.admin import BookAdmin, CustomBookAdmin
+from core.models import Author, Book, EBook
+from core.tests.admin_integration.mixins import AdminTestMixin
 from import_export.exceptions import FieldError
 
 

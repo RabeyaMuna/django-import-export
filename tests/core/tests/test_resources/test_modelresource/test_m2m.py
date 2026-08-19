@@ -1,8 +1,8 @@
 import tablib
-from core.models import Author, Book, Category
-from core.tests.resources import BookResource
 from django.test import TestCase
 
+from core.models import Author, Book, Category
+from core.tests.resources import BookResource
 from import_export import fields, resources, widgets
 
 

@@ -146,8 +146,7 @@ class ModelDeclarativeMetaclass(DeclarativeMetaclass):
                         except FieldDoesNotExist as e:
                             logger.debug(e, exc_info=e)
                             raise FieldDoesNotExist(
-                                "%s: %s has no field named '%s'"
-                                % (verbose_path, model.__name__, attr)
+                                f"{verbose_path}: {model.__name__} has no field named '{attr}'"
                             )
 
                         if i < len(attrs) - 1:
@@ -159,7 +158,7 @@ class ModelDeclarativeMetaclass(DeclarativeMetaclass):
                             else:
                                 if get_related_model(f) is None:
                                     raise KeyError(
-                                        "%s is not a relation" % verbose_path
+                                        f"{verbose_path} is not a relation"
                                     )
                                 model = get_related_model(f)
 

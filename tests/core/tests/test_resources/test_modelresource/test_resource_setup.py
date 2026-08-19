@@ -1,8 +1,8 @@
 import tablib
-from core.models import Author, Book
-from core.tests.resources import BookResource, WithDefaultResource
 from django.test import TestCase
 
+from core.models import Author, Book
+from core.tests.resources import BookResource, WithDefaultResource
 from import_export import resources, widgets
 from import_export.instance_loaders import ModelInstanceLoader
 

@@ -1,19 +1,16 @@
 class ImportExportError(Exception):
     """A generic exception for all others to extend."""
 
-    pass
 
 
 class FieldError(ImportExportError):
     """Raised when a field encounters an error."""
 
-    pass
 
 
 class WidgetError(ImportExportError):
     """Raised when there is a misconfiguration with a Widget."""
 
-    pass
 
 
 class ImportError(ImportExportError):

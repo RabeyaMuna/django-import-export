@@ -55,7 +55,7 @@ class CachedInstanceLoader(ModelInstanceLoader):
         self.all_instances = {}
         if self.dataset.dict and self.pk_field.column_name in self.dataset.dict[0]:
             ids = [self.pk_field.clean(row) for row in self.dataset.dict]
-            qs = self.get_queryset().filter(**{"%s__in" % self.pk_field.attribute: ids})
+            qs = self.get_queryset().filter(**{f"{self.pk_field.attribute}__in": ids})
 
             self.all_instances = {
                 self.pk_field.get_value(instance): instance for instance in qs

@@ -1,10 +1,10 @@
 from datetime import date
 
 import tablib
-from core.models import Author, Book
-from core.tests.resources import BookResource
 from django.test import TestCase
 
+from core.models import Author, Book
+from core.tests.resources import BookResource
 from import_export import fields, resources
 
 
@@ -94,7 +94,7 @@ class RelationshipFieldTest(TestCase):
 
         resource = B()
         self.assertEqual(1, len(resource.fields))
-        self.assertEqual("full_title", list(resource.fields.keys())[0])
+        self.assertEqual("full_title", next(iter(resource.fields.keys())))
 
     def test_widget_format_in_fk_field(self):
         class B(resources.ModelResource):

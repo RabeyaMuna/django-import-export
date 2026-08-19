@@ -1,8 +1,8 @@
-from core.admin import BookResource
-from core.models import Book
 from django.core.management import CommandError
 from django.test import TestCase
 
+from core.admin import BookResource
+from core.models import Book
 from import_export.command_utils import (
     get_default_format_names,
     get_format_class,

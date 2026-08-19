@@ -1,7 +1,7 @@
 import tablib
-from core.models import Author, Book, Category
 from django.test import TestCase
 
+from core.models import Author, Book, Category
 from import_export import resources, results
 
 

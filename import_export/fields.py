@@ -71,7 +71,7 @@ class Field:
         path = f"{self.__class__.__module__}.{self.__class__.__name__}"
         if self.column_name is not None:
             return f"<{path}: {self.column_name}>"
-        return "<%s>" % path
+        return f"<{path}>"
 
     def clean(self, row, **kwargs):
         """
@@ -82,8 +82,8 @@ class Field:
             value = row[self.column_name]
         except KeyError:
             raise KeyError(
-                "Column '%s' not found in dataset. Available "
-                "columns are: %s" % (self.column_name, list(row))
+                f"Column '{self.column_name}' not found in dataset. Available "
+                f"columns are: {list(row)}"
             )
 
         value = self.widget.clean(value, row=row, **kwargs)

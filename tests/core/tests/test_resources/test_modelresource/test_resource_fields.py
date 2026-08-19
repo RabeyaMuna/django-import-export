@@ -1,9 +1,9 @@
 import warnings
 
 import tablib
-from core.models import Book
 from django.test import TestCase
 
+from core.models import Book
 from import_export import fields, resources
 
 # ignore warnings which result from invalid field declaration (#1930)

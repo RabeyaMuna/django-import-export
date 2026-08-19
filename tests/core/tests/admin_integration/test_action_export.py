@@ -3,9 +3,6 @@ from datetime import date, datetime
 from unittest import mock
 from unittest.mock import MagicMock, PropertyMock, patch
 
-from core.admin import CategoryAdmin
-from core.models import Author, Book, Category, UUIDCategory
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.contrib.auth.models import User
@@ -16,6 +13,9 @@ from django.test.testcases import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 
+from core.admin import CategoryAdmin
+from core.models import Author, Book, Category, UUIDCategory
+from core.tests.admin_integration.mixins import AdminTestMixin
 from import_export.admin import ExportMixin
 
 
@@ -338,6 +338,8 @@ class TestExportFilterPreservation(AdminTestMixin, TestCase):
             "export_items": [str(self.old_book1.id), str(self.old_book2.id)],
             **self.resource_fields_payload,
         }
+        # Add form prefix to data keys for proper form processing
+        self._prepend_form_prefix(export_data)
 
         # POST to the export URL that should have preserved filters
         # Suppress the deprecation warning for get_valid_export_item_pks
@@ -370,8 +372,7 @@ class TestExportButtonOnChangeForm(AdminTestMixin, TestCase):
         super().setUp()
         self.cat1 = Category.objects.create(name="Cat 1")
         self.change_url = reverse(
-            "%s:%s_%s_change"
-            % (
+            "{}:{}_{}_change".format(
                 "admin",
                 "core",
                 "category",
@@ -393,8 +394,7 @@ class TestExportButtonOnChangeForm(AdminTestMixin, TestCase):
     def test_export_button_on_change_form_for_custom_pk(self):
         self.cat1 = UUIDCategory.objects.create(name="Cat 1")
         self.change_url = reverse(
-            "%s:%s_%s_change"
-            % (
+            "{}:{}_{}_change".format(
                 "admin",
                 "core",
                 "uuidcategory",
@@ -483,8 +483,7 @@ class TestSkipExportFormFromChangeForm(AdminTestMixin, TestCase):
         self.model_admin = CategoryAdmin(Category, AdminSite())
 
         self.change_url = reverse(
-            "%s:%s_%s_change"
-            % (
+            "{}:{}_{}_change".format(
                 "admin",
                 "core",
                 "category",

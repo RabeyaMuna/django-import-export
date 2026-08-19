@@ -139,12 +139,12 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
             path(
                 "process_import/",
                 self.admin_site.admin_view(self.process_import),
-                name="%s_%s_process_import" % info,
+                name="{}_{}_process_import".format(*info),
             ),
             path(
                 "import/",
                 self.admin_site.admin_view(self.import_action),
-                name="%s_%s_import" % info,
+                name="{}_{}_import".format(*info),
             ),
         ]
         return my_urls + urls
@@ -223,7 +223,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
         post_import.send(sender=None, model=self.model)
 
         url = reverse(
-            "admin:%s_%s_changelist" % self.get_model_info(),
+            "admin:{}_{}_changelist".format(*self.get_model_info()),
             current_app=self.admin_site.name,
         )
         return HttpResponseRedirect(url)
@@ -252,7 +252,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
                                 object_repr=row.object_repr,
                                 action_flag=logentry_map[row.import_type],
                                 change_message=_(
-                                    "%s through import_export" % row.import_type
+                                    "{} through import_export".format(row.import_type)
                                 ),
                             )
 
@@ -591,7 +591,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
             action_flag = logentry_map.get(import_type, missing)
             if action_flag is not missing:
                 self._create_log_entry(
-                    user_pk, rows[import_type], import_type, action_flag
+                    user_pk, instances, import_type, action_flag
                 )
 
     def _create_log_entry(self, user_pk, rows, import_type, action_flag):
@@ -600,7 +600,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
                 user_pk,
                 rows,
                 action_flag,
-                change_message=_("%s through import_export" % import_type),
+                change_message=_("{} through import_export".format(import_type)),
                 single_object=len(rows) == 1,
             )
 
@@ -630,7 +630,7 @@ class ExportMixin(BaseExportMixin, ImportExportMixinBase):
             path(
                 "export/",
                 self.admin_site.admin_view(self.export_action),
-                name="%s_%s_export" % self.get_model_info(),
+                name="{}_{}_export".format(*self.get_model_info()),
             ),
         ]
         return my_urls + urls
@@ -692,7 +692,6 @@ class ExportMixin(BaseExportMixin, ImportExportMixinBase):
                 prevents executing unnecessary COUNT queries during ChangeList
                 initialization.
                 """
-                pass
 
         cl = ExportChangeList(**changelist_kwargs)
 
@@ -822,9 +821,7 @@ class ExportMixin(BaseExportMixin, ImportExportMixinBase):
         )
         content_type = file_format.get_content_type()
         response = HttpResponse(export_data, content_type=content_type)
-        response["Content-Disposition"] = 'attachment; filename="{}"'.format(
-            self.get_export_filename(request, queryset, file_format),
-        )
+        response["Content-Disposition"] = f'attachment; filename="{self.get_export_filename(request, queryset, file_format)}"'
         post_export.send(sender=None, model=self.model)
         return response
 
@@ -907,12 +904,7 @@ class ExportActionMixin(ExportMixin):
         # this is necessary to render the FORM action correctly
         # i.e. so the POST goes to the correct URL
         export_url = reverse(
-            "%s:%s_%s_export"
-            % (
-                self.admin_site.name,
-                self.model._meta.app_label,
-                self.model._meta.model_name,
-            )
+            f"{self.admin_site.name}:{self.model._meta.app_label}_{self.model._meta.model_name}_export"
         )
 
         # Preserve admin changelist filters by including request GET parameters

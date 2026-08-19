@@ -1,6 +1,6 @@
-from core.models import Author, Book
 from django.test import TestCase
 
+from core.models import Author, Book
 from import_export import fields, resources, widgets
 
 

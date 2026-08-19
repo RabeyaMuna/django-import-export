@@ -1,9 +1,9 @@
 import tablib
-from core.models import Book, Category, Person, Role, UUIDBook, UUIDCategory
-from core.tests.resources import BookResource
 from django.contrib.auth.models import User
 from django.test import TestCase
 
+from core.models import Book, Category, Person, Role, UUIDBook, UUIDCategory
+from core.tests.resources import BookResource
 from import_export import fields, resources, results, widgets
 
 

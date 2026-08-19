@@ -16,13 +16,11 @@ class AuthorFormMixin(forms.Form):
 class CustomImportForm(AuthorFormMixin, ImportForm):
     """Customized ImportForm, with author field required"""
 
-    pass
 
 
 class CustomConfirmImportForm(AuthorFormMixin, ConfirmImportForm):
     """Customized ConfirmImportForm, with author field required"""
 
-    pass
 
 
 class CustomExportForm(AuthorFormMixin, SelectableFieldsExportForm):

@@ -5,11 +5,11 @@ from unittest import mock
 
 import openpyxl
 import tablib
-from core.tests.utils import ignore_utcnow_deprecation_warning
 from django.test import TestCase, override_settings
 from django.utils.encoding import force_str
 from tablib.core import UnsupportedFormat
 
+from core.tests.utils import ignore_utcnow_deprecation_warning
 from import_export.formats import base_formats
 from import_export.widgets import NumberWidget
 

@@ -1,8 +1,8 @@
 import django.forms
-from core.models import Author
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.test import TestCase
 
+from core.models import Author
+from core.tests.admin_integration.mixins import AdminTestMixin
 from import_export import forms, resources
 from import_export.formats.base_formats import CSV
 

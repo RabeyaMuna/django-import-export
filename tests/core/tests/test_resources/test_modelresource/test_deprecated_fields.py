@@ -1,10 +1,10 @@
 import warnings
 
 import tablib
-from core.models import Book
-from core.tests.resources import BookResource
 from django.test import TestCase
 
+from core.models import Book
+from core.tests.resources import BookResource
 from import_export import resources
 
 

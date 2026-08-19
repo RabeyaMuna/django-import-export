@@ -4,10 +4,10 @@ from unittest import mock
 from unittest.mock import patch
 
 import tablib
-from core.models import Book
-from core.tests.resources import MyResource
 from django.test import TestCase
 
+from core.models import Book
+from core.tests.resources import MyResource
 from import_export import fields, results
 from import_export.options import ResourceOptions
 

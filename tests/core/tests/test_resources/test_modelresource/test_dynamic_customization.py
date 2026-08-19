@@ -1,4 +1,10 @@
 import tablib
+from django.contrib.auth.models import User
+from django.core.exceptions import FieldDoesNotExist
+from django.db.models import Count
+from django.db.utils import ConnectionDoesNotExist
+from django.test import TestCase
+
 from core.models import (
     Book,
     Category,
@@ -8,12 +14,6 @@ from core.models import (
     WithFloatField,
 )
 from core.tests.resources import BookResource, CategoryResource
-from django.contrib.auth.models import User
-from django.core.exceptions import FieldDoesNotExist
-from django.db.models import Count
-from django.db.utils import ConnectionDoesNotExist
-from django.test import TestCase
-
 from import_export import exceptions, fields, resources, results
 
 

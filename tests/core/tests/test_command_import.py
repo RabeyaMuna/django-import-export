@@ -3,11 +3,11 @@ from io import BytesIO, StringIO, TextIOWrapper
 from unittest import mock
 from unittest.mock import patch
 
-from core.models import Book
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase
 
+from core.models import Book
 from import_export.formats.base_formats import XLSX
 from import_export.resources import ModelResource, modelresource_factory
 

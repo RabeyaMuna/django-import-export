@@ -3,13 +3,13 @@ import sys
 from unittest import skipUnless
 
 import tablib
-from core.models import Book
-from core.tests.resources import BookResource
 from django.conf import settings
 from django.db import IntegrityError
 from django.db.models import CharField
 from django.test import TestCase, TransactionTestCase
 
+from core.models import Book
+from core.tests.resources import BookResource
 from import_export import fields, resources, widgets
 
 
@@ -113,7 +113,7 @@ if "postgresql" in settings.DATABASES["default"]["ENGINE"]:
             result = book_with_chapters_resource.import_data(dataset, dry_run=False)
 
             self.assertFalse(result.has_errors())
-            book_with_chapters = list(BookWithChapters.objects.all())[0]
+            book_with_chapters = next(iter(BookWithChapters.objects.all()))
             self.assertListEqual(book_with_chapters.chapters, chapters)
 
     class TestImportArrayField(TestCase):

@@ -2,12 +2,12 @@ import warnings
 from unittest import mock
 from unittest.mock import MagicMock
 
-from core.models import Book, Category
-from core.tests.admin_integration.mixins import AdminTestMixin
 from django.http import HttpRequest
 from django.test.testcases import TestCase
 from django.urls import reverse
 
+from core.models import Book, Category
+from core.tests.admin_integration.mixins import AdminTestMixin
 from import_export import admin, formats, forms, mixins, resources
 from import_export.resources import modelresource_factory
 

@@ -6,10 +6,6 @@ from zoneinfo import ZoneInfo
 
 import chardet
 import tablib
-from core.admin import BookAdmin, BookResource, EBookResource
-from core.models import Author, Book, EBook, UUIDCategory
-from core.tests.admin_integration.mixins import AdminTestMixin
-from core.tests.utils import ignore_utcnow_deprecation_warning
 from django import forms
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.views.main import ChangeList
@@ -22,6 +18,10 @@ from django.test.utils import override_settings
 from openpyxl.reader.excel import load_workbook
 from tablib import Dataset
 
+from core.admin import BookAdmin, BookResource, EBookResource
+from core.models import Author, Book, EBook, UUIDCategory
+from core.tests.admin_integration.mixins import AdminTestMixin
+from core.tests.utils import ignore_utcnow_deprecation_warning
 from import_export import fields, formats, resources, widgets
 from import_export.admin import ExportActionMixin, ExportMixin
 from import_export.fields import Field
@@ -1017,7 +1017,6 @@ class GetExportFieldsTest(AdminTestMixin, TestCase):
     def setUp(self):
         super().setUp()
         from core.models import Book
-
         from import_export.fields import Field
         from import_export.resources import ModelResource
 
@@ -1062,7 +1061,7 @@ class GetExportFieldsTest(AdminTestMixin, TestCase):
         fields_list = response.context.get("fields_list", [])
         self.assertTrue(fields_list, "fields_list should not be empty")
 
-        resource_name, field_names = fields_list[0]
+        _resource_name, field_names = fields_list[0]
 
         expected_export_fields = ["exported_name", "exported_author_email"]
         unexpected_import_fields = ["book_name", "book_price"]
