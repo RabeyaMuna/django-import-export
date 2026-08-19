@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         ("core", "0013_alter_author_birthday"),
     ]
 
-    operations = []
+    operations: list = []
 
     pg_only_operations = [
         migrations.CreateModel(

@@ -14,7 +14,7 @@ from import_export.resources import modelresource_factory
 
 class ExportViewMixinTest(AdminTestMixin, TestCase):
     class TestExportForm(forms.ExportForm):
-        cleaned_data = {}
+        cleaned_data: dict = {}
 
     def setUp(self):
         self.url = reverse("export-category")
@@ -187,7 +187,7 @@ class MixinModelAdminTest(AdminTestMixin, TestCase):
         self.assertEqual(1, admin.call_count)
 
     class BaseModelResourceClassTest(mixins.BaseImportMixin, mixins.BaseExportMixin):
-        resource_class = resources.Resource
+        resource_class: type = resources.Resource  # type: ignore[assignment]
         export_call_count = 0
         import_call_count = 0
 
@@ -248,7 +248,7 @@ class MixinModelAdminTest(AdminTestMixin, TestCase):
             admin.get_resource_classes(self.request)
 
     class BaseModelAdminFaultyResourceClassesTest(mixins.BaseExportMixin):
-        resource_classes = resources.Resource
+        resource_classes: type = resources.Resource  # type: ignore[assignment]
 
     def test_faulty_resource_class_raises_exception(self):
         """Test fallback mechanism to old get_export_resource_class() method"""
@@ -261,8 +261,8 @@ class MixinModelAdminTest(AdminTestMixin, TestCase):
     class BaseModelAdminBothResourceTest(mixins.BaseExportMixin):
         call_count = 0
 
-        resource_class = resources.Resource
-        resource_classes = [resources.Resource]
+        resource_class: type = resources.Resource  # type: ignore[assignment]
+        resource_classes: list = [resources.Resource]  # type: ignore[assignment]
 
     def test_both_resource_class_raises_exception(self):
         """Test fallback mechanism to old get_export_resource_class() method"""

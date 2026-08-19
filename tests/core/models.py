@@ -97,7 +97,7 @@ class Book(models.Model):
         """
         return (self.name,) + self.author.natural_key()
 
-    natural_key.dependencies = ["core.Author"]
+    natural_key.dependencies = ["core.Author"]  # type: ignore[attr-defined]
 
     def __str__(self):
         return self.name

@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         ("core", "0003_withfloatfield"),
     ]
 
-    operations = []
+    operations: list = []
 
     pg_only_operations = [
         migrations.CreateModel(

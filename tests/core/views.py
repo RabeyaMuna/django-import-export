@@ -10,4 +10,4 @@ with warnings.catch_warnings():
     warnings.simplefilter("ignore", category=DeprecationWarning)
 
     class CategoryExportView(mixins.ExportViewFormMixin, ListView):
-        model = models.Category
+        model = models.Category  # type: ignore[assignment]

@@ -64,7 +64,7 @@ class Format:
 
 
 class TablibFormat(Format):
-    TABLIB_MODULE = None
+    TABLIB_MODULE: str | None = None
     CONTENT_TYPE = "application/octet-stream"
 
     def __init__(self, encoding=None):

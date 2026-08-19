@@ -422,7 +422,7 @@ class TestExportEncoding(TestCase):
     mock_request.POST = {"django-import-export-format": 0, "bookresource_id": True}
 
     class TestMixin(ExportMixin):
-        model = Book
+        model = Book  # type: ignore[assignment]
 
         def __init__(self, test_str=None):
             self.test_str = test_str

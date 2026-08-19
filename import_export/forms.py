@@ -133,13 +133,13 @@ class SelectableFieldsExportForm(ExportForm):
             },
         )
 
-    def _init_selectable_fields(self, resources: Iterable[ModelResource]) -> None:
+    def _init_selectable_fields(self, resources: Iterable[type[ModelResource]]) -> None:
         """
         Create `BooleanField(s)` for resource fields
         """
         self.resources = resources
         self.is_selectable_fields_form = True
-        self.resource_fields = {resource.__name__: [] for resource in resources}
+        self.resource_fields: dict[str, list] = {resource.__name__: [] for resource in resources}
 
         for index, resource in enumerate(resources):
             boolean_fields = self._create_boolean_fields(resource, index)
@@ -153,14 +153,14 @@ class SelectableFieldsExportForm(ExportForm):
         ]
         self.order_fields(ordered_fields)
 
-    def _get_field_label(self, resource: ModelResource, field_name: str) -> str:
+    def _get_field_label(self, resource: type[ModelResource], field_name: str) -> str:
         title = field_name.replace("_", " ").title()
-        field = resource.fields.get(field_name)
+        field = resource.fields.get(field_name)  # type: ignore[misc]
         if field and field.column_name != field_name:
             title = f"{title} ({field.column_name})"
         return title
 
-    def _create_boolean_fields(self, resource: ModelResource, index: int) -> None:
+    def _create_boolean_fields(self, resource: type[ModelResource], index: int) -> list[str]:
         # Initiate resource to get export fields (respects overridden get_export_fields)
         resource_instance = resource()
 
@@ -211,7 +211,7 @@ class SelectableFieldsExportForm(ExportForm):
         return boolean_fields
 
     @staticmethod
-    def create_boolean_field_name(resource: ModelResource, field_name: str) -> str:
+    def create_boolean_field_name(resource: type[ModelResource], field_name: str) -> str:
         """
         Create field name by combining `resource_name` + `field_name` to prevent
         conflict between resource fields with same name
@@ -236,12 +236,12 @@ class SelectableFieldsExportForm(ExportForm):
         return self.cleaned_data
 
     def _remove_unselected_resource_fields(
-        self, selected_resource: ModelResource
+        self, selected_resource: type[ModelResource]
     ) -> None:
         """
         Remove boolean fields except the fields for selected resource
         """
-        _cleaned_data = deepcopy(self.cleaned_data)
+        _cleaned_data = deepcopy(self.cleaned_data)  # type: ignore[has-type]
 
         for resource_name, fields in self.resource_fields.items():
             if selected_resource.__name__ == resource_name:
@@ -268,7 +268,7 @@ class SelectableFieldsExportForm(ExportForm):
                 pass
         return self.resources[resource_index]
 
-    def _normalize_resource_fields(self, selected_resource: ModelResource) -> None:
+    def _normalize_resource_fields(self, selected_resource: type[ModelResource]) -> None:
         """
         Field names are combination of resource_name + field_name,
         normalize field names by removing resource name

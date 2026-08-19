@@ -23,7 +23,7 @@ class BaseImportExportMixin:
     """
 
     resource_class = None
-    resource_classes = []
+    resource_classes: list = []
 
     @property
     def formats(self):

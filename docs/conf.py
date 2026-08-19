@@ -1,7 +1,7 @@
 import os
 import sys
 from datetime import datetime
-from importlib.metadata import version
+from importlib import metadata
 
 import django
 
@@ -46,9 +46,9 @@ copyright = f"2012–{current_year}, Bojan Mihelac and others."
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-release = version("django-import-export")
+release = metadata.version("django-import-export")
 # for example take major/minor
-version = ".".join(release.split(".")[:2])
+VERSION = ".".join(release.split(".")[:2])
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
@@ -113,7 +113,7 @@ texinfo_documents = [
 ]
 
 # Documents to append as an appendix to all manuals.
-texinfo_appendices = []
+texinfo_appendices: list = []
 
 # intersphinx documentation
 intersphinx_mapping = {"tablib": ("https://tablib.readthedocs.io/en/stable/", None)}
