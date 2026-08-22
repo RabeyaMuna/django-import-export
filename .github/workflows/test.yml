@@ -32,14 +32,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.IMPORT_EXPORT_MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.DB_NAME }}
+        ports:
+        - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     steps:
-    - name: Set up MySQL
-      run: >
-        sudo /etc/init.d/mysql start
-
-        mysql -e 'CREATE DATABASE ${{ env.DB_NAME }};'
-        -u${{ env.IMPORT_EXPORT_MYSQL_USER }}
-        -p${{ env.IMPORT_EXPORT_MYSQL_PASSWORD }}
     - name: Check out repository code
       uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
