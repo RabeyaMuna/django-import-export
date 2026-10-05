@@ -350,6 +350,13 @@ class TestExportFilterPreservation(AdminTestMixin, TestCase):
             final_response = self._post_url_response(export_url, export_data)
 
         # Should get CSV export that respects the filter context
+        self.assertTrue(
+            200 <= final_response.status_code < 300,
+            msg=(
+                f"Unexpected status {final_response.status_code}: "
+                f"{final_response.content.decode()}"
+            ),
+        )
         self.assertEqual(final_response["Content-Type"], "text/csv")
         content = final_response.content.decode()
 
