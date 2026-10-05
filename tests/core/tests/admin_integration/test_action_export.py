@@ -350,7 +350,8 @@ class TestExportFilterPreservation(AdminTestMixin, TestCase):
             final_response = self._post_url_response(export_url, export_data)
 
         # Should get CSV export that respects the filter context
-        self.assertEqual(final_response["Content-Type"], "text/csv")
+        self.assertEqual(final_response.status_code, 200)
+        self.assertEqual(final_response["Content-Type"].split(";")[0], "text/csv")
         content = final_response.content.decode()
 
         # Verify the export contains the expected filtered data
