@@ -582,7 +582,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_save_instance(self, instance, row, **kwargs):
         r"""
@@ -595,7 +594,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def delete_instance(self, instance, row, **kwargs):
         r"""
@@ -631,7 +629,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_delete_instance(self, instance, row, **kwargs):
         r"""
@@ -644,7 +641,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def import_field(self, field, instance, row, is_m2m=False, **kwargs):
         r"""
@@ -827,7 +823,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_import(self, dataset, result, **kwargs):
         r"""
@@ -841,7 +836,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def before_import_row(self, row, **kwargs):
         r"""
@@ -852,7 +846,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_import_row(self, row, row_result, **kwargs):
         r"""
@@ -866,7 +859,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def after_init_instance(self, instance, new, row, **kwargs):
         r"""
@@ -881,7 +873,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             See :meth:`import_row`
         """
-        pass
 
     def handle_import_error(self, result, error, raise_errors=False):
         logger.debug(error, exc_info=error)
@@ -1201,7 +1192,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             Metadata which may be associated with the export.
         """
-        pass
 
     def after_export(self, queryset, dataset, **kwargs):
         r"""
@@ -1214,7 +1204,6 @@ class Resource(metaclass=DeclarativeMetaclass):
         :param \**kwargs:
             Metadata which may be associated with the export.
         """
-        pass
 
     def filter_export(self, queryset, **kwargs):
         r"""
@@ -1306,7 +1295,7 @@ class Resource(metaclass=DeclarativeMetaclass):
         # get any declared 'order' fields
         order_fields = getattr(self._meta, order_field) or ()
         # get any defined fields
-        defined_fields = order_fields + tuple(getattr(self._meta, "fields") or ())
+        defined_fields = order_fields + tuple(self._meta.fields or ())
 
         order = list()
         [order.append(f) for f in defined_fields if f not in order]
@@ -1594,9 +1583,9 @@ def modelresource_factory(model, resource_class=ModelResource):
     Factory for creating ``ModelResource`` class for given Django model.
     """
     attrs = {"model": model}
-    Meta = type(str("Meta"), (object,), attrs)
+    Meta = type("Meta", (object,), attrs)
 
-    class_name = model.__name__ + str("Resource")
+    class_name = model.__name__ + "Resource"
 
     class_attrs = {
         "Meta": Meta,
