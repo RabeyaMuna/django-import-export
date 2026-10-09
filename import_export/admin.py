@@ -248,9 +248,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
     def add_success_message(self, result, request):
         opts = self.model._meta
 
-        success_message = _(
-            "Import finished, with {} new and " "{} updated {}."
-        ).format(
+        success_message = _("Import finished, with {} new and {} updated {}.").format(
             result.totals[RowResult.IMPORT_TYPE_NEW],
             result.totals[RowResult.IMPORT_TYPE_UPDATE],
             opts.verbose_name_plural,
@@ -484,7 +482,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
         tmp_storage = tmp_storage_cls(
             encoding=encoding, read_mode=input_format.get_read_mode()
         )
-        data = bytes()
+        data = b""
         for chunk in import_file.chunks():
             data += chunk
 
@@ -556,7 +554,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
                 # rollback_on_validation_errors is set to True so that we rollback on
                 # validation errors. If this is not done validation errors would be
                 # silently skipped.
-                data = bytes()
+                data = b""
                 for chunk in import_file.chunks():
                     data += chunk
                 try:
@@ -745,11 +743,11 @@ class ExportMixin(BaseExportMixin, ImportExportMixinBase):
         class ExportChangeList(ChangeList):
             def get_results(self, request):
                 """
-                We override this method because we only call ChangeList.get_queryset()
-                so we don't need anything from this method. The get_results() gets called during
-                ChangeList.__init__() and we do want to avoid unnecessary COUNT queries.
+                We override this method because we only call
+                ChangeList.get_queryset() so we don't need anything from this
+                method. The get_results() gets called during ChangeList.__init__()
+                and we do want to avoid unnecessary COUNT queries.
                 """
-                pass
 
         cl = ExportChangeList(**changelist_kwargs)
 
