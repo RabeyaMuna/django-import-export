@@ -1,13 +1,27 @@
 import json
 import sys
 from collections import OrderedDict
-from copy import deepcopy
 from datetime import date
 from decimal import Decimal, InvalidOperation
 from unittest import mock, skipUnless
 from unittest.mock import patch
 
 import tablib
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.exceptions import (
+    FieldDoesNotExist,
+    ImproperlyConfigured,
+    ValidationError,
+)
+from django.core.paginator import Paginator
+from django.db import IntegrityError
+from django.db.models import CharField, Count
+from django.db.utils import ConnectionDoesNotExist
+from django.test import TestCase, TransactionTestCase, skipUnlessDBFeature
+from django.utils.encoding import force_str
+from django.utils.html import strip_tags
+
 from core.models import (
     Author,
     Book,
@@ -29,21 +43,6 @@ from core.tests.resources import (
     WithDefaultResource,
 )
 from core.tests.utils import ignore_widget_deprecation_warning
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.core.exceptions import (
-    FieldDoesNotExist,
-    ImproperlyConfigured,
-    ValidationError,
-)
-from django.core.paginator import Paginator
-from django.db import IntegrityError
-from django.db.models import CharField, Count
-from django.db.utils import ConnectionDoesNotExist
-from django.test import TestCase, TransactionTestCase, skipUnlessDBFeature
-from django.utils.encoding import force_str
-from django.utils.html import strip_tags
-
 from import_export import exceptions, fields, resources, results, widgets
 from import_export.instance_loaders import ModelInstanceLoader
 from import_export.options import ResourceOptions
