@@ -1,7 +1,6 @@
 import json
 import sys
 from collections import OrderedDict
-from copy import deepcopy
 from datetime import date
 from decimal import Decimal, InvalidOperation
 from unittest import mock, skipUnless
@@ -1190,7 +1189,7 @@ class ModelResourceTest(TestCase):
                     fields = ("author__nonexistent",)
 
         self.assertEqual(
-            "Book.author.nonexistent: Author has no field named " "'nonexistent'",
+            "Book.author.nonexistent: Author has no field named 'nonexistent'",
             cm.exception.args[0],
         )
 
