@@ -820,7 +820,7 @@ class ExportMixin(BaseExportMixin, ImportExportMixinBase):
             encoding=self.to_encoding,
             export_form=export_form,
         )
-        content_type = file_format.get_content_type()
+        content_type = 'text/csv' if hasattr(file_format, 'get_title') and file_format.get_title() == 'CSV' else file_format.get_content_type()
         response = HttpResponse(export_data, content_type=content_type)
         response["Content-Disposition"] = 'attachment; filename="{}"'.format(
             self.get_export_filename(request, queryset, file_format),
