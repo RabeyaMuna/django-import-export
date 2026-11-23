@@ -680,7 +680,9 @@ class ExportAdminIntegrationTest(AdminTestMixin, TestCase):
             "file_format": "0",
         }
         date_str = datetime.now().strftime("%Y-%m-%d")
-        with self.assertNumQueries(7):  # Should not contain COUNT queries from ModelAdmin.get_results()
+        with self.assertNumQueries(
+            7
+        ):  # Should not contain COUNT queries from ModelAdmin.get_results()
             response = self.client.post("/admin/core/book/export/", data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.has_header("Content-Disposition"))
@@ -1493,7 +1495,7 @@ class TestImportSkipConfirm(AdminTestMixin, TransactionTestCase):
             follow=True,
             encoding="utf-8-sig",
             regex_in_response=(
-                ".*UnicodeDecodeError.* encountered " "while trying to read file"
+                ".*UnicodeDecodeError.* encountered while trying to read file"
             ),
         )
 
